@@ -1,0 +1,11 @@
+{
+  "functions": [
+    {
+      "name": "NtCreateFile",
+      "basic_block_count": 12,
+      "calls": ["NtCreateFile"],
+      "strings": ["object manager"],
+      "operations": ["syscall dispatch"]
+    }
+  ]
+}

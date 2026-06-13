@@ -1,0 +1,5 @@
+log_level: info
+workers: 4
+timeout: 10m
+output_format: markdown
+string_min_length: 5

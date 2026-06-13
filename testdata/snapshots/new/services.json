@@ -1,0 +1,8 @@
+[
+  {
+    "name": "SampleSvc",
+    "binary_path": "driver.sys",
+    "permissions": "restricted",
+    "start_type": "manual"
+  }
+]

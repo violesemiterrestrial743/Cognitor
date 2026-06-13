@@ -1,0 +1,12 @@
+{
+  "functions": [
+    {
+      "name": "DispatchDeviceControl",
+      "basic_block_count": 8,
+      "calls": ["memcpy", "IoCompleteRequest"],
+      "strings": ["IOCTL_SAMPLE"],
+      "imports": ["memcpy"],
+      "operations": ["copy user buffer", "privileged operation"]
+    }
+  ]
+}

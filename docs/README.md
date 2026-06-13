@@ -1,0 +1,27 @@
+# Cognitor Documentation
+
+Start here when working with Cognitor.
+
+## User Docs
+
+- [Examples](examples.md): copy-paste workflows for demos, real snapshots, DLL focus, CI, and staged analysis.
+- [Snapshot Inputs](inputs.md): supported files, sidecars, service context, registry context, and layout tips.
+- [Reports And Output Bundle](reports.md): Markdown, JSON, SARIF, CSV, SQLite, bundle manifests, and CI gates.
+
+## Technical Docs
+
+- [Architecture](design.md): package map, data flow, matching model, and design principles.
+- [Rule Guide](rules.md): rule families, evidence signals, researcher checks, scoring, and adding rules.
+- [Extending Cognitor](extending.md): rule development, sidecar exporters, report formats, and test strategy.
+
+## Fast Path
+
+```sh
+cognitor compare old new --workdir out --all-formats
+```
+
+## Focused DLL Review
+
+```sh
+cognitor compare old new --focus ntdll.dll --workdir out-ntdll --all-formats
+```

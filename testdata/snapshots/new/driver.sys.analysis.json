@@ -1,0 +1,12 @@
+{
+  "functions": [
+    {
+      "name": "DispatchDeviceControl",
+      "basic_block_count": 11,
+      "calls": ["ProbeForRead", "SeAccessCheck", "memcpy", "IoCompleteRequest"],
+      "strings": ["IOCTL_SAMPLE", "input buffer validation"],
+      "imports": ["ProbeForRead", "SeAccessCheck", "memcpy"],
+      "operations": ["access mask validation", "length check before copy", "copy user buffer", "privileged operation"]
+    }
+  ]
+}

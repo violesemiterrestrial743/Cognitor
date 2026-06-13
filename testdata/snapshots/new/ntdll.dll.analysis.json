@@ -1,0 +1,11 @@
+{
+  "functions": [
+    {
+      "name": "NtCreateFile",
+      "basic_block_count": 15,
+      "calls": ["NtCreateFile", "RtlValidSecurityDescriptor", "ObReferenceObjectByHandle"],
+      "strings": ["object manager", "access mask validation", "syscall previous mode validation"],
+      "operations": ["syscall dispatch", "access mask validation", "length check", "handle type validation"]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+[
+  {
+    "path": "HKLM\\Software\\Sample",
+    "acl": "administrators-only",
+    "description": "sample defensive fixture"
+  }
+]
